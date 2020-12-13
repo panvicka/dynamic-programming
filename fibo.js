@@ -5,7 +5,9 @@ function executeWithPerformance(functionToRun, parameter, extraText) {
   const result = functionToRun(parameter);
   const t1 = performance.now();
   console.log(
-    `fib of ${parameter} is ${result} and it took ${t1 - t0} miliseconds ${extraText}`
+    `fib of ${parameter} is ${result} and it took ${
+      t1 - t0
+    } miliseconds ${extraText}`
   );
 }
 
@@ -18,6 +20,7 @@ const fibBruteForce = (n) => {
 // memoization
 // js object, keys are arguments, values are return values
 // so i dont have to calculate stuff over and over again
+// now O(n) time complexity and O(n) space complexity 
 
 const fibWithMemo = (n, memo = {}) => {
   // first base cases
@@ -28,8 +31,8 @@ const fibWithMemo = (n, memo = {}) => {
 };
 
 executeWithPerformance(fibBruteForce, 6, "(with bruteforce)");
-executeWithPerformance(fibBruteForce, 10,"(with bruteforce)");
-executeWithPerformance(fibBruteForce, 40,"(with bruteforce)");
+executeWithPerformance(fibBruteForce, 10, "(with bruteforce)");
+executeWithPerformance(fibBruteForce, 40, "(with bruteforce)");
 
 executeWithPerformance(fibWithMemo, 6, "(with memo)");
 executeWithPerformance(fibWithMemo, 10, "(with memo)");
