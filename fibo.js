@@ -1,11 +1,11 @@
 const { PerformanceObserver, performance } = require("perf_hooks");
 
-function executeWithPerformance(functionToRun, parameter, textToPrint) {
+function executeWithPerformance(functionToRun, parameter, extraText) {
   const t0 = performance.now();
   const result = functionToRun(parameter);
   const t1 = performance.now();
   console.log(
-    `fib of ${parameter} is ${result} and it took ${t1 - t0} miliseconds`
+    `fib of ${parameter} is ${result} and it took ${t1 - t0} miliseconds ${extraText}`
   );
 }
 
@@ -23,10 +23,14 @@ const fibWithMemo = (n, memo = {}) => {
   // first base cases
   if (n in memo) return memo[n]; // if I have already calculated this, just fetch it without recalculation
   if (n <= 2) return 1;
-
-  return fibBruteForce(n - 1) + fibBruteForce(n - 2);
+  memo[n] = fibWithMemo(n - 1, memo) + fibWithMemo(n - 2, memo);
+  return memo[n];
 };
 
-executeWithPerformance(fibBruteForce, 6, "fib of 10 brute force");
-executeWithPerformance(fibBruteForce, 45, "fib of 10 brute force");
-executeWithPerformance(fibBruteForce, 43, "fib of 43 brute force");
+executeWithPerformance(fibBruteForce, 6, "(with bruteforce)");
+executeWithPerformance(fibBruteForce, 10,"(with bruteforce)");
+executeWithPerformance(fibBruteForce, 40,"(with bruteforce)");
+
+executeWithPerformance(fibWithMemo, 6, "(with memo)");
+executeWithPerformance(fibWithMemo, 10, "(with memo)");
+executeWithPerformance(fibWithMemo, 40, "(with memo)");
